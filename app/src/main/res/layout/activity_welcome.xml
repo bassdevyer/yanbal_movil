@@ -22,22 +22,24 @@
 
     <LinearLayout
         android:id="@+id/welcomeLinearLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/logoImageView"
+        android:gravity="center"
         android:visibility="gone">
 
         <TextView
             android:id="@+id/welcomeTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
+            android:layout_margin="30dp"
             android:text="@string/welcome"
             android:textAppearance="?android:attr/textAppearanceLarge" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/loginLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/welcomeLinearLayout"
@@ -51,7 +53,8 @@
             android:layout_margin="@dimen/default_margin"
             android:background="@drawable/rounded_edittext"
             android:hint="@string/username"
-            android:inputType="number" />
+            android:inputType="number"
+            android:padding="@dimen/small_margin" />
 
         <EditText
             android:id="@+id/passwordEditText"
@@ -60,7 +63,8 @@
             android:layout_margin="@dimen/default_margin"
             android:background="@drawable/rounded_edittext"
             android:hint="@string/password"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:padding="@dimen/small_margin" />
 
         <Button
             android:id="@+id/loginButton"

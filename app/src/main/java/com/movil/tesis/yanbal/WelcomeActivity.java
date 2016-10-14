@@ -8,8 +8,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.TimeoutError;
@@ -20,11 +22,16 @@ import com.movil.tesis.yanbal.model.Consultora;
 
 import org.json.JSONObject;
 
+import static android.view.View.GONE;
+
 public class WelcomeActivity extends AppCompatActivity {
 
     private static final String TAG = "WelcomeActivity";
 
     private Consultora loggedConsultant;
+
+    private EditText usernameEditText;
+    private EditText passWordEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +42,8 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private void inflateViews() {
-        final EditText usernameEditText = (EditText) findViewById(R.id.usernameEditText);
-        final EditText passWordEditText = (EditText) findViewById(R.id.passwordEditText);
+        usernameEditText = (EditText) findViewById(R.id.usernameEditText);
+        passWordEditText = (EditText) findViewById(R.id.passwordEditText);
         Button loginButton = (Button) findViewById(R.id.loginButton);
         if (loginButton != null) {
             loginButton.setOnClickListener(new View.OnClickListener() {
@@ -53,14 +60,14 @@ public class WelcomeActivity extends AppCompatActivity {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Autenticando");
         //JsonObjectRequest(String url, JSONObject jsonRequest, Listener<JSONObject> listener, Response.ErrorListener errorListener)
-        String url = "http://192.168.1.8:8080/yanbalWs/authenticate/" + username + "/" + password;
+        String url = "http://192.168.0.162:8080/yanbalWs/authenticate/" + username + "/" + password;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 progressDialog.dismiss();
                 if (response != null) {
                     loggedConsultant = new Gson().fromJson(response.toString(), Consultora.class);
-                    Toast.makeText(WelcomeActivity.this, "Bienvenida, " + loggedConsultant.getNombres(), Toast.LENGTH_SHORT).show();
+                    showWelcomeMessage();
                 }
             }
         }, new Response.ErrorListener() {
@@ -72,6 +79,12 @@ public class WelcomeActivity extends AppCompatActivity {
                     AlertDialog alertDialog = new AlertDialog.Builder(WelcomeActivity.this).create();
                     alertDialog.setMessage("Error contactando al servidor");
                     alertDialog.show();
+                }
+                if (error instanceof ParseError) {
+                    AlertDialog incorrectCredentialsAlertDialog = new AlertDialog.Builder(WelcomeActivity.this).create();
+                    incorrectCredentialsAlertDialog.setMessage("Su usuario y/o contraseña son incorrectos");
+                    incorrectCredentialsAlertDialog.show();
+                    cleanCredentialsText();
                 } else {
                     AlertDialog alertDialog = new AlertDialog.Builder(WelcomeActivity.this).create();
                     alertDialog.setMessage("Error");
@@ -83,5 +96,29 @@ public class WelcomeActivity extends AppCompatActivity {
         AppSingleton.getInstance(this).addToRequestQueue(request, null);
 
 
+    }
+
+    private void cleanCredentialsText() {
+        usernameEditText.getText().clear();
+        passWordEditText.getText().clear();
+    }
+
+    private void showWelcomeMessage() {
+        LinearLayout loginLayout = (LinearLayout) findViewById(R.id.loginLayout);
+        if (loginLayout != null) {
+            loginLayout.setVisibility(GONE);
+        }
+        LinearLayout welcomeLinearLayout = (LinearLayout) findViewById(R.id.welcomeLinearLayout);
+        if (welcomeLinearLayout != null) {
+            welcomeLinearLayout.setVisibility(View.VISIBLE);
+            setWelcomeMessage();
+        }
+    }
+
+    private void setWelcomeMessage() {
+        TextView welcomeTextView = (TextView) findViewById(R.id.welcomeTextView);
+        if (welcomeTextView != null) {
+            welcomeTextView.setText(getString(R.string.welcomeMessage, loggedConsultant.getNombresConsultora()));
+        }
     }
 }

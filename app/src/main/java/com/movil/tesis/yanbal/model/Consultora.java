@@ -8,7 +8,7 @@ public class Consultora {
 
     private String identificacion;
     private String tipoIdentificacion;
-    private String nombres;
+    private String nombresConsultora;
     private String apellidos;
     private String email;
     private String celular;
@@ -33,12 +33,12 @@ public class Consultora {
         this.tipoIdentificacion = tipoIdentificacion;
     }
 
-    public String getNombres() {
-        return nombres;
+    public String getNombresConsultora() {
+        return nombresConsultora;
     }
 
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
+    public void setNombresConsultora(String nombresConsultora) {
+        this.nombresConsultora = nombresConsultora;
     }
 
     public String getApellidos() {
