@@ -34,6 +34,8 @@ public class WelcomeActivity extends AppCompatActivity {
     private EditText usernameEditText;
     private EditText passWordEditText;
 
+    private static final int REGISTER_ACTIVITY_REQUEST_CODE = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +63,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent registerConsultantIntent = new Intent(WelcomeActivity.this, RegisterConsultantActivity.class);
-                    startActivity(registerConsultantIntent);
+                    startActivityForResult(registerConsultantIntent, REGISTER_ACTIVITY_REQUEST_CODE);
                 }
             });
         }
@@ -131,6 +133,19 @@ public class WelcomeActivity extends AppCompatActivity {
         TextView welcomeTextView = (TextView) findViewById(R.id.welcomeTextView);
         if (welcomeTextView != null) {
             welcomeTextView.setText(getString(R.string.welcomeMessage, loggedConsultant.getNombresConsultora()));
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case REGISTER_ACTIVITY_REQUEST_CODE: {
+                if (resultCode == RESULT_OK) {
+                    loggedConsultant = data.getParcelableExtra("consultant");
+                    showWelcomeMessage();
+                }
+            }
         }
     }
 }

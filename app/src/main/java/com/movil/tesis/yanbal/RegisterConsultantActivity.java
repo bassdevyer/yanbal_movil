@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -14,6 +15,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -144,6 +146,11 @@ public class RegisterConsultantActivity extends AppCompatActivity implements Dat
             public void onResponse(JSONObject response) {
                 progressDialog.dismiss();
                 Consultora createdConsultora = new Gson().fromJson(response.toString(), Consultora.class);
+                Toast.makeText(RegisterConsultantActivity.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("consultant", createdConsultora);
+                setResult(RESULT_OK, resultIntent);
+                finish();
             }
         }, new Response.ErrorListener() {
             @Override

@@ -1,10 +1,13 @@
 package com.movil.tesis.yanbal.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by mac on 10/13/16.
  */
 
-public class Consultora {
+public class Consultora implements Parcelable {
 
     private String identificacionConsultora;
     private String tipoIdentificacionConsultora;
@@ -16,6 +19,34 @@ public class Consultora {
     private String fechaNacimientoConsultora;
     private String generoConsultora;
     private String password;
+
+    public Consultora() {
+    }
+
+    protected Consultora(Parcel in) {
+        identificacionConsultora = in.readString();
+        tipoIdentificacionConsultora = in.readString();
+        nombresConsultora = in.readString();
+        apellidosConsultora = in.readString();
+        emailConsultora = in.readString();
+        celularConsultora = in.readString();
+        telefonoConsultora = in.readString();
+        fechaNacimientoConsultora = in.readString();
+        generoConsultora = in.readString();
+        password = in.readString();
+    }
+
+    public static final Creator<Consultora> CREATOR = new Creator<Consultora>() {
+        @Override
+        public Consultora createFromParcel(Parcel in) {
+            return new Consultora(in);
+        }
+
+        @Override
+        public Consultora[] newArray(int size) {
+            return new Consultora[size];
+        }
+    };
 
     public String getIdentificacionConsultora() {
         return identificacionConsultora;
@@ -95,5 +126,24 @@ public class Consultora {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(identificacionConsultora);
+        dest.writeString(tipoIdentificacionConsultora);
+        dest.writeString(nombresConsultora);
+        dest.writeString(apellidosConsultora);
+        dest.writeString(emailConsultora);
+        dest.writeString(celularConsultora);
+        dest.writeString(telefonoConsultora);
+        dest.writeString(fechaNacimientoConsultora);
+        dest.writeString(generoConsultora);
+        dest.writeString(password);
     }
 }
