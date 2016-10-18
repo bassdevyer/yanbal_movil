@@ -2,6 +2,7 @@ package com.movil.tesis.yanbal;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -53,6 +54,17 @@ public class WelcomeActivity extends AppCompatActivity {
                 }
             });
         }
+
+        TextView createAcountTextView = (TextView) findViewById(R.id.createAcountTextView);
+        if (createAcountTextView != null) {
+            createAcountTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent registerConsultantIntent = new Intent(WelcomeActivity.this, RegisterConsultantActivity.class);
+                    startActivity(registerConsultantIntent);
+                }
+            });
+        }
     }
 
 
@@ -60,7 +72,7 @@ public class WelcomeActivity extends AppCompatActivity {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Autenticando");
         //JsonObjectRequest(String url, JSONObject jsonRequest, Listener<JSONObject> listener, Response.ErrorListener errorListener)
-        String url = "http://192.168.0.162:8080/yanbalWs/authenticate/" + username + "/" + password;
+        String url = "http://192.168.1.8:8080/yanbalWs/authenticate/" + username + "/" + password;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

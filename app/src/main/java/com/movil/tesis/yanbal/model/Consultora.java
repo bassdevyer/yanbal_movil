@@ -6,31 +6,31 @@ package com.movil.tesis.yanbal.model;
 
 public class Consultora {
 
-    private String identificacion;
-    private String tipoIdentificacion;
+    private String identificacionConsultora;
+    private String tipoIdentificacionConsultora;
     private String nombresConsultora;
-    private String apellidos;
-    private String email;
-    private String celular;
-    private String telefono;
-    private String fechaNacimiento;
-    private String genero;
+    private String apellidosConsultora;
+    private String emailConsultora;
+    private String celularConsultora;
+    private String telefonoConsultora;
+    private String fechaNacimientoConsultora;
+    private String generoConsultora;
     private String password;
 
-    public String getIdentificacion() {
-        return identificacion;
+    public String getIdentificacionConsultora() {
+        return identificacionConsultora;
     }
 
-    public void setIdentificacion(String identificacion) {
-        this.identificacion = identificacion;
+    public void setIdentificacionConsultora(String identificacionConsultora) {
+        this.identificacionConsultora = identificacionConsultora;
     }
 
-    public String getTipoIdentificacion() {
-        return tipoIdentificacion;
+    public String getTipoIdentificacionConsultora() {
+        return tipoIdentificacionConsultora;
     }
 
-    public void setTipoIdentificacion(String tipoIdentificacion) {
-        this.tipoIdentificacion = tipoIdentificacion;
+    public void setTipoIdentificacionConsultora(String tipoIdentificacionConsultora) {
+        this.tipoIdentificacionConsultora = tipoIdentificacionConsultora;
     }
 
     public String getNombresConsultora() {
@@ -41,52 +41,52 @@ public class Consultora {
         this.nombresConsultora = nombresConsultora;
     }
 
-    public String getApellidos() {
-        return apellidos;
+    public String getApellidosConsultora() {
+        return apellidosConsultora;
     }
 
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
+    public void setApellidosConsultora(String apellidosConsultora) {
+        this.apellidosConsultora = apellidosConsultora;
     }
 
-    public String getEmail() {
-        return email;
+    public String getEmailConsultora() {
+        return emailConsultora;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmailConsultora(String emailConsultora) {
+        this.emailConsultora = emailConsultora;
     }
 
-    public String getCelular() {
-        return celular;
+    public String getCelularConsultora() {
+        return celularConsultora;
     }
 
-    public void setCelular(String celular) {
-        this.celular = celular;
+    public void setCelularConsultora(String celularConsultora) {
+        this.celularConsultora = celularConsultora;
     }
 
-    public String getTelefono() {
-        return telefono;
+    public String getTelefonoConsultora() {
+        return telefonoConsultora;
     }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
+    public void setTelefonoConsultora(String telefonoConsultora) {
+        this.telefonoConsultora = telefonoConsultora;
     }
 
-    public String getFechaNacimiento() {
-        return fechaNacimiento;
+    public String getFechaNacimientoConsultora() {
+        return fechaNacimientoConsultora;
     }
 
-    public void setFechaNacimiento(String fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
+    public void setFechaNacimientoConsultora(String fechaNacimientoConsultora) {
+        this.fechaNacimientoConsultora = fechaNacimientoConsultora;
     }
 
-    public String getGenero() {
-        return genero;
+    public String getGeneroConsultora() {
+        return generoConsultora;
     }
 
-    public void setGenero(String genero) {
-        this.genero = genero;
+    public void setGeneroConsultora(String generoConsultora) {
+        this.generoConsultora = generoConsultora;
     }
 
     public String getPassword() {
