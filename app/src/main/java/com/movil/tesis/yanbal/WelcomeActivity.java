@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -63,7 +64,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent registerConsultantIntent = new Intent(WelcomeActivity.this, RegisterConsultantActivity.class);
-                    startActivityForResult(registerConsultantIntent, REGISTER_ACTIVITY_REQUEST_CODE);
+                    startActivity(registerConsultantIntent);
                 }
             });
         }
@@ -133,19 +134,21 @@ public class WelcomeActivity extends AppCompatActivity {
         TextView welcomeTextView = (TextView) findViewById(R.id.welcomeTextView);
         if (welcomeTextView != null) {
             welcomeTextView.setText(getString(R.string.welcomeMessage, loggedConsultant.getNombresConsultora()));
+            openMainAcvitity();
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case REGISTER_ACTIVITY_REQUEST_CODE: {
-                if (resultCode == RESULT_OK) {
-                    loggedConsultant = data.getParcelableExtra("consultant");
-                    showWelcomeMessage();
-                }
+    private void openMainAcvitity() {
+        Handler mHandler = new Handler();
+        mHandler.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                Intent mainActivityIntent = new Intent(WelcomeActivity.this, MainActivity.class);
+                startActivity(mainActivityIntent);
+                finish();
             }
-        }
+
+        }, 2000L);
     }
 }

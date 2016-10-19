@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -147,9 +146,6 @@ public class RegisterConsultantActivity extends AppCompatActivity implements Dat
                 progressDialog.dismiss();
                 Consultora createdConsultora = new Gson().fromJson(response.toString(), Consultora.class);
                 Toast.makeText(RegisterConsultantActivity.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
-                Intent resultIntent = new Intent();
-                resultIntent.putExtra("consultant", createdConsultora);
-                setResult(RESULT_OK, resultIntent);
                 finish();
             }
         }, new Response.ErrorListener() {
