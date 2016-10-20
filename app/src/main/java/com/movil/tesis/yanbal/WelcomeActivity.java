@@ -21,6 +21,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 import com.movil.tesis.yanbal.model.Consultora;
+import com.movil.tesis.yanbal.util.RequestType;
+import com.movil.tesis.yanbal.util.UrlUtil;
 
 import org.json.JSONObject;
 
@@ -75,7 +77,7 @@ public class WelcomeActivity extends AppCompatActivity {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Autenticando");
         //JsonObjectRequest(String url, JSONObject jsonRequest, Listener<JSONObject> listener, Response.ErrorListener errorListener)
-        String url = "http://192.168.1.8:8080/yanbalWs/authenticate/" + username + "/" + password;
+        String url = UrlUtil.getInstance(this).getUrl(RequestType.LOGIN, username, password);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

@@ -23,6 +23,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 import com.movil.tesis.yanbal.model.Consultora;
+import com.movil.tesis.yanbal.util.RequestType;
+import com.movil.tesis.yanbal.util.UrlUtil;
 
 import org.json.JSONObject;
 
@@ -139,7 +141,7 @@ public class RegisterConsultantActivity extends AppCompatActivity implements Dat
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Registrando");
         //JsonObjectRequest(String url, JSONObject jsonRequest, Listener<JSONObject> listener, Response.ErrorListener errorListener)
-        String url = "http://192.168.1.8:8080/yanbalWs/registerconsultant";
+        String url = UrlUtil.getInstance(this).getUrl(RequestType.CONSULTANT_REGISTER, null, null);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
