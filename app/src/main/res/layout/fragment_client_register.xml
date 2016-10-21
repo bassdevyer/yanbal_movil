@@ -130,14 +130,26 @@
                 android:src="@drawable/maps_icon" />
 
             <TextView
-                android:id="@+id/clientLocationTextView"
+                android:id="@+id/clientLocationLatitudeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="4dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="4dp"
+                android:text=";"/>
+
+            <TextView
+                android:id="@+id/clientLocationLongitudeTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="4dp" />
         </LinearLayout>
 
         <Button
-            android:id="@+id/registerButton"
+            android:id="@+id/registerClientButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Registrarse" />

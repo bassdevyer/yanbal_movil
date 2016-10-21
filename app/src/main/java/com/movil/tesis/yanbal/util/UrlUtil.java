@@ -55,7 +55,10 @@ public class UrlUtil {
                 break;
             }
             case CLIENT_REGISTER: {
-
+                builder.scheme(properties.getScheme());
+                builder.encodedAuthority(authority);
+                builder.appendEncodedPath(properties.getServiceName());
+                builder.appendEncodedPath(properties.getRegisterClientEndpoint());
                 break;
             }
             default: {

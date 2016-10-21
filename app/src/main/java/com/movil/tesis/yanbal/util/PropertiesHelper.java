@@ -29,6 +29,7 @@ public class PropertiesHelper {
     private String userIdQueryParameter;
     private String passwordQueryParameter;
     private String registerConsultantEndpoint;
+    private String registerClientEndpoint;
 
     private PropertiesHelper(Context context) {
         this.context = context;
@@ -57,6 +58,7 @@ public class PropertiesHelper {
             userIdQueryParameter = properties.getProperty("user_id_query_parameter");
             passwordQueryParameter = properties.getProperty("password_query_parameter");
             registerConsultantEndpoint = properties.getProperty("register_consultant_endpoint");
+            registerClientEndpoint = properties.getProperty("register_client_endpoint");
             Log.i(TAG, "initPropertiesFile: Properties file successfully loaded");
         } catch (IOException | NumberFormatException ex) {
             Log.e(TAG, "Error cargando archivo de configuración", ex);
@@ -89,5 +91,9 @@ public class PropertiesHelper {
 
     public String getRegisterConsultantEndpoint() {
         return registerConsultantEndpoint;
+    }
+
+    public String getRegisterClientEndpoint() {
+        return registerClientEndpoint;
     }
 }
