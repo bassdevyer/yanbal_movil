@@ -118,6 +118,23 @@
                 android:text="Ninguna" />
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/clientLocationButton"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:src="@drawable/maps_icon" />
+
+            <TextView
+                android:id="@+id/clientLocationTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="4dp" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/registerButton"
