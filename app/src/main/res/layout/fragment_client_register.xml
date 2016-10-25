@@ -145,8 +145,8 @@
 
                 <ImageButton
                     android:id="@+id/clientLocationButton"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
                     android:src="@drawable/maps_icon" />
 
                 <TextView
