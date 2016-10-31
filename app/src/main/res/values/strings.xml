@@ -19,4 +19,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_map">Selección de localización</string>
+
+    <string name="order_register">Registro pedido</string>
+    <string name="client">Cliente</string>
+    <string name="add">Agregar</string>
 </resources>
