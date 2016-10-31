@@ -2,7 +2,9 @@ package com.movil.tesis.yanbal;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 import com.movil.tesis.yanbal.model.Consultora;
+import com.movil.tesis.yanbal.util.Constants;
 import com.movil.tesis.yanbal.util.RequestType;
 import com.movil.tesis.yanbal.util.UrlUtil;
 
@@ -44,7 +47,18 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
+        if (isLogged()) {
+            Intent mainActivityIntent = new Intent(WelcomeActivity.this, MainActivity.class);
+            startActivity(mainActivityIntent);
+            finish();
+        }
+
         inflateViews();
+    }
+
+    private boolean isLogged() {
+        SharedPreferences sharedPreferences = getSharedPreferences(Constants.PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean(Constants.IS_LOGGED, false);
     }
 
     private void inflateViews() {
@@ -84,6 +98,9 @@ public class WelcomeActivity extends AppCompatActivity {
                 progressDialog.dismiss();
                 if (response != null) {
                     loggedConsultant = new Gson().fromJson(response.toString(), Consultora.class);
+                    SharedPreferences.Editor sharedPreferences = getSharedPreferences(Constants.PREFERENCES_FILE_NAME, Context.MODE_PRIVATE).edit();
+                    sharedPreferences.putBoolean(Constants.IS_LOGGED, true);
+                    sharedPreferences.commit();
                     showWelcomeMessage();
                 }
             }
