@@ -158,5 +158,8 @@ public class Cliente {
         return result;
     }
 
-
+    @Override
+    public String toString() {
+        return this.apellidosCliente + " " + this.nombresCliente;
+    }
 }

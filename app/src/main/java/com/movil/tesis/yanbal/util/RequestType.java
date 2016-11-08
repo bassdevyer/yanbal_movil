@@ -6,5 +6,7 @@ package com.movil.tesis.yanbal.util;
 public enum RequestType {
     LOGIN,
     CONSULTANT_REGISTER,
-    CLIENT_REGISTER
+    CLIENT_REGISTER,
+    PRODUCT_EXISTENCE_CHECK,
+    CLIENTS_LIST
 }

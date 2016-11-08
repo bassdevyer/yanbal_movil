@@ -159,7 +159,7 @@ public class ClientRegisterFragment extends Fragment {
     private void submitRegister() {
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Registrando");
-        String url = UrlUtil.getInstance(getActivity()).getUrl(RequestType.CLIENT_REGISTER, null, null);
+        String url = UrlUtil.getInstance(getActivity()).getUrl(RequestType.CLIENT_REGISTER, null, null, null);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

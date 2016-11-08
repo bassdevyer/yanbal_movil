@@ -30,6 +30,12 @@ public class PropertiesHelper {
     private String passwordQueryParameter;
     private String registerConsultantEndpoint;
     private String registerClientEndpoint;
+    private String catalogAuthority;
+    private String catalogServiceName;
+    private String productCheckEndpoint;
+    private String codeQueryParameter;
+    private String clientsListEndpoint;
+
 
     private PropertiesHelper(Context context) {
         this.context = context;
@@ -59,6 +65,11 @@ public class PropertiesHelper {
             passwordQueryParameter = properties.getProperty("password_query_parameter");
             registerConsultantEndpoint = properties.getProperty("register_consultant_endpoint");
             registerClientEndpoint = properties.getProperty("register_client_endpoint");
+            catalogAuthority = properties.getProperty("catalog_authority");
+            catalogServiceName = properties.getProperty("catalog_service_name");
+            productCheckEndpoint = properties.getProperty("product_check_endpoint");
+            codeQueryParameter = properties.getProperty("code_query_parameter");
+            clientsListEndpoint = properties.getProperty("clients_list_endpoint");
             Log.i(TAG, "initPropertiesFile: Properties file successfully loaded");
         } catch (IOException | NumberFormatException ex) {
             Log.e(TAG, "Error cargando archivo de configuración", ex);
@@ -95,5 +106,25 @@ public class PropertiesHelper {
 
     public String getRegisterClientEndpoint() {
         return registerClientEndpoint;
+    }
+
+    public String getCatalogAuthority() {
+        return catalogAuthority;
+    }
+
+    public String getCatalogServiceName() {
+        return catalogServiceName;
+    }
+
+    public String getProductCheckEndpoint() {
+        return productCheckEndpoint;
+    }
+
+    public String getCodeQueryParameter() {
+        return codeQueryParameter;
+    }
+
+    public String getClientsListEndpoint() {
+        return clientsListEndpoint;
     }
 }

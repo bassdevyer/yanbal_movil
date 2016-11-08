@@ -91,7 +91,7 @@ public class WelcomeActivity extends AppCompatActivity {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Autenticando");
         //JsonObjectRequest(String url, JSONObject jsonRequest, Listener<JSONObject> listener, Response.ErrorListener errorListener)
-        String url = UrlUtil.getInstance(this).getUrl(RequestType.LOGIN, username, password);
+        String url = UrlUtil.getInstance(this).getUrl(RequestType.LOGIN, username, password, null);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

@@ -141,7 +141,7 @@ public class RegisterConsultantActivity extends AppCompatActivity implements Dat
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Registrando");
         //JsonObjectRequest(String url, JSONObject jsonRequest, Listener<JSONObject> listener, Response.ErrorListener errorListener)
-        String url = UrlUtil.getInstance(this).getUrl(RequestType.CONSULTANT_REGISTER, null, null);
+        String url = UrlUtil.getInstance(this).getUrl(RequestType.CONSULTANT_REGISTER, null, null, null);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

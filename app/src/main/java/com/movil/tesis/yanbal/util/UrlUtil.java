@@ -29,7 +29,11 @@ public class UrlUtil {
         return instance;
     }
 
-    public String getUrl(RequestType requestType, String username, String password) throws IllegalArgumentException {
+    public String getProductCheckUrl(String code) {
+        return getUrl(RequestType.PRODUCT_EXISTENCE_CHECK, null, null, code);
+    }
+
+    public String getUrl(RequestType requestType, String username, String password, String code) throws IllegalArgumentException {
         Uri.Builder builder = new Uri.Builder();
         PropertiesHelper properties = PropertiesHelper.getInstance(context);
 
@@ -59,6 +63,21 @@ public class UrlUtil {
                 builder.encodedAuthority(authority);
                 builder.appendEncodedPath(properties.getServiceName());
                 builder.appendEncodedPath(properties.getRegisterClientEndpoint());
+                break;
+            }
+            case PRODUCT_EXISTENCE_CHECK: {
+                builder.scheme(properties.getScheme());
+                builder.encodedAuthority(properties.getCatalogAuthority());
+                builder.appendEncodedPath(properties.getCatalogServiceName());
+                builder.appendEncodedPath(properties.getProductCheckEndpoint());
+                builder.appendQueryParameter(properties.getCodeQueryParameter(), code);
+                break;
+            }
+            case CLIENTS_LIST: {
+                builder.scheme(properties.getScheme());
+                builder.encodedAuthority(authority);
+                builder.appendEncodedPath(properties.getServiceName());
+                builder.appendEncodedPath(properties.getClientsListEndpoint());
                 break;
             }
             default: {
