@@ -45,17 +45,24 @@
             android:orientation="vertical">
 
             <EditText
+                android:id="@+id/codeEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="COD Producto" />
+                android:hint="COD Producto"
+                android:inputType="number"
+                android:maxLength="4" />
 
             <EditText
+                android:id="@+id/quantityEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Cantidad" />
+                android:hint="Cantidad"
+                android:inputType="number"
+                android:maxLength="3" />
         </LinearLayout>
 
         <Button
+            android:id="@+id/addItemButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -63,6 +70,7 @@
     </LinearLayout>
 
     <TableLayout
+        android:id="@+id/tableLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

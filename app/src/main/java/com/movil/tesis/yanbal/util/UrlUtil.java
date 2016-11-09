@@ -67,8 +67,8 @@ public class UrlUtil {
             }
             case PRODUCT_EXISTENCE_CHECK: {
                 builder.scheme(properties.getScheme());
-                builder.encodedAuthority(properties.getCatalogAuthority());
-                builder.appendEncodedPath(properties.getCatalogServiceName());
+                builder.encodedAuthority(properties.getAuthority());
+                builder.appendEncodedPath(properties.getServiceName());
                 builder.appendEncodedPath(properties.getProductCheckEndpoint());
                 builder.appendQueryParameter(properties.getCodeQueryParameter(), code);
                 break;
