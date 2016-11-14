@@ -77,26 +77,31 @@
         <TableRow>
 
             <TextView
+                style="@style/cellHeader"
                 android:layout_column="0"
                 android:layout_weight="1"
                 android:text="COD PRO" />
 
             <TextView
+                style="@style/cellHeader"
                 android:layout_column="1"
                 android:layout_weight="1"
                 android:text="PU" />
 
             <TextView
+                style="@style/cellHeader"
                 android:layout_column="2"
                 android:layout_weight="1"
                 android:text="Desc" />
 
             <TextView
+                style="@style/cellHeader"
                 android:layout_column="3"
                 android:layout_weight="1"
                 android:text="Cantidad" />
 
             <TextView
+                style="@style/cellHeader"
                 android:layout_column="4"
                 android:layout_weight="1"
                 android:text="Total" />

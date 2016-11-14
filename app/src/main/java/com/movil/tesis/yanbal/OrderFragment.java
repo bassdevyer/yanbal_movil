@@ -104,23 +104,29 @@ public class OrderFragment extends Fragment {
 
     private void addItem() {
         TableRow row = new TableRow(getActivity());
-        TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT);
+        TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.MATCH_PARENT);
         row.setLayoutParams(lp);
+
         TextView codeTextView = new TextView(getActivity());
         codeTextView.setText(String.valueOf(itemToBeAdded.getCodigoRapido()));
         row.addView(codeTextView);
+
         TextView unitPriceTextView = new TextView(getActivity());
         unitPriceTextView.setText(String.valueOf(itemToBeAdded.getValor()));
         row.addView(unitPriceTextView);
+
         TextView descriptionTextView = new TextView(getActivity());
         descriptionTextView.setText(itemToBeAdded.getNombreProducto());
         row.addView(descriptionTextView);
+
         TextView quantityTextView = new TextView(getActivity());
         quantityTextView.setText(quantityEditText.getText());
         row.addView(quantityTextView);
+
         TextView totalTextView = new TextView(getActivity());
         totalTextView.setText(String.valueOf(Double.parseDouble(itemToBeAdded.getValor().toString()) * Integer.parseInt(quantityEditText.getText().toString())));
         row.addView(totalTextView);
+
         tableLayout.addView(row);
     }
 

@@ -8,4 +8,16 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="cellHeader">
+        <item name="android:background">@drawable/header_cell_shape</item>
+        <item name="android:textColor">#FFF</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="cellRow">
+        <item name="android:background">@drawable/row_cell_shape</item>
+        <item name="android:textColor">#FFF</item>
+        <item name="android:gravity">center</item>
+    </style>
+
 </resources>
