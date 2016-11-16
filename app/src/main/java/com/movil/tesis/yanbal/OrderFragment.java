@@ -63,7 +63,7 @@ public class OrderFragment extends Fragment {
     private RecyclerView orderItemsRecyclerView;
     private OrderItemAdapter orderItemAdapter;
 
-    SimpleDateFormat dt = new SimpleDateFormat("yyyyy-mm-dd");
+    SimpleDateFormat dt = new SimpleDateFormat("yyyy-mm-dd");
 
     private static final String TAG = "OrderFragment";
 
@@ -151,13 +151,13 @@ public class OrderFragment extends Fragment {
                 Cliente client = (Cliente) clientsSpinner.getSelectedItem();
                 Consultora consultant = new Consultora();
                 consultant.setIdentificacionConsultora(consultantIdentification);
-                PedidosCabecera outcome = new PedidosCabecera();
-                outcome.setCliente(client);
-                outcome.setConsultora(consultant);
-                outcome.setFechaCompra(dt.format(new Date()));
-                outcome.setPedidosDetalles(orderItems);
-                Log.d(TAG, "getBody: " + new Gson().toJson(outcome));
-                return new Gson().toJson(outcome).getBytes();
+                orderHeader = new PedidosCabecera();
+                orderHeader.setCliente(client);
+                orderHeader.setConsultora(consultant);
+                orderHeader.setFechaCompra(dt.format(new Date()));
+                orderHeader.setPedidosDetalles(orderItems);
+                Log.d(TAG, "getBody: " + new Gson().toJson(orderHeader));
+                return new Gson().toJson(orderHeader).getBytes();
             }
 
             @Override
