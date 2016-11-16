@@ -5,6 +5,9 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,9 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.ParseError;
 import com.android.volley.Request;
@@ -27,8 +28,14 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.movil.tesis.yanbal.adapter.OrderItemAdapter;
 import com.movil.tesis.yanbal.model.Cliente;
+import com.movil.tesis.yanbal.model.Consultora;
+import com.movil.tesis.yanbal.model.PedidosCabecera;
+import com.movil.tesis.yanbal.model.PedidosDetalle;
 import com.movil.tesis.yanbal.model.ProductosYanbal;
+import com.movil.tesis.yanbal.util.Constants;
+import com.movil.tesis.yanbal.util.Preferences;
 import com.movil.tesis.yanbal.util.RequestType;
 import com.movil.tesis.yanbal.util.UrlUtil;
 
@@ -36,7 +43,12 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import static com.movil.tesis.yanbal.R.id.recyclerView;
 
 public class OrderFragment extends Fragment {
 
@@ -45,7 +57,13 @@ public class OrderFragment extends Fragment {
     private EditText quantityEditText;
     private Button addItemButton;
     private ProductosYanbal itemToBeAdded;
-    private TableLayout tableLayout;
+    private String consultantIdentification;
+    private List<PedidosDetalle> orderItems;
+    private PedidosCabecera orderHeader;
+    private RecyclerView orderItemsRecyclerView;
+    private OrderItemAdapter orderItemAdapter;
+
+    SimpleDateFormat dt = new SimpleDateFormat("yyyyy-mm-dd");
 
     private static final String TAG = "OrderFragment";
 
@@ -56,6 +74,10 @@ public class OrderFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        consultantIdentification = Preferences.getInstance(getActivity()).readStringPreference(Constants.CONSULTANT_ID, null);
+        orderItems = new ArrayList<>();
+        orderHeader = new PedidosCabecera();
+        orderItemAdapter = new OrderItemAdapter(orderItems);
     }
 
     @Override
@@ -76,7 +98,75 @@ public class OrderFragment extends Fragment {
         if (addItemButton != null) {
             setAddItemButton();
         }
-        tableLayout = (TableLayout) rootView.findViewById(R.id.tableLayout);
+        Button registerOrderButton = (Button) rootView.findViewById(R.id.registerOrderButton);
+        if (registerOrderButton != null) {
+            registerOrderButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    registerOrder();
+                }
+            });
+        }
+        orderItemsRecyclerView = (RecyclerView) rootView.findViewById(recyclerView);
+        if (orderItemsRecyclerView != null) {
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+            orderItemsRecyclerView.setLayoutManager(mLayoutManager);
+            orderItemsRecyclerView.setItemAnimator(new DefaultItemAnimator());
+            orderItemsRecyclerView.setAdapter(orderItemAdapter);
+        }
+
+    }
+
+    private void registerOrder() {
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Registrando orden");
+        String url = UrlUtil.getInstance(getActivity()).getUrl(RequestType.ORDER_REGISTER, null, null, null);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                progressDialog.dismiss();
+                Log.d(TAG, "onResponse: " + response.toString());
+                PedidosCabecera createdOrder = new Gson().fromJson(response.toString(), PedidosCabecera.class);
+                Toast.makeText(getActivity(), "Registro exitoso", Toast.LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "onErrorResponse: ", error);
+                progressDialog.dismiss();
+                if (error instanceof TimeoutError) {
+                    AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                    alertDialog.setMessage("Error contactando al servidor");
+                    alertDialog.show();
+                } else {
+                    AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                    alertDialog.setMessage("Error");
+                    alertDialog.show();
+                }
+            }
+        }
+        ) {
+            @Override
+            public byte[] getBody() {
+                Cliente client = (Cliente) clientsSpinner.getSelectedItem();
+                Consultora consultant = new Consultora();
+                consultant.setIdentificacionConsultora(consultantIdentification);
+                PedidosCabecera outcome = new PedidosCabecera();
+                outcome.setCliente(client);
+                outcome.setConsultora(consultant);
+                outcome.setFechaCompra(dt.format(new Date()));
+                outcome.setPedidosDetalles(orderItems);
+                Log.d(TAG, "getBody: " + new Gson().toJson(outcome));
+                return new Gson().toJson(outcome).getBytes();
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+        };
+        progressDialog.show();
+        AppSingleton.getInstance(getActivity()).addToRequestQueue(request, null);
     }
 
     private void setAddItemButton() {
@@ -103,31 +193,14 @@ public class OrderFragment extends Fragment {
     }
 
     private void addItem() {
-        TableRow row = new TableRow(getActivity());
-        TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.MATCH_PARENT);
-        row.setLayoutParams(lp);
-
-        TextView codeTextView = new TextView(getActivity());
-        codeTextView.setText(String.valueOf(itemToBeAdded.getCodigoRapido()));
-        row.addView(codeTextView);
-
-        TextView unitPriceTextView = new TextView(getActivity());
-        unitPriceTextView.setText(String.valueOf(itemToBeAdded.getValor()));
-        row.addView(unitPriceTextView);
-
-        TextView descriptionTextView = new TextView(getActivity());
-        descriptionTextView.setText(itemToBeAdded.getNombreProducto());
-        row.addView(descriptionTextView);
-
-        TextView quantityTextView = new TextView(getActivity());
-        quantityTextView.setText(quantityEditText.getText());
-        row.addView(quantityTextView);
-
-        TextView totalTextView = new TextView(getActivity());
-        totalTextView.setText(String.valueOf(Double.parseDouble(itemToBeAdded.getValor().toString()) * Integer.parseInt(quantityEditText.getText().toString())));
-        row.addView(totalTextView);
-
-        tableLayout.addView(row);
+        PedidosDetalle itemToAdd = new PedidosDetalle();
+        itemToAdd.setNombreProducto(String.valueOf(itemToBeAdded.getCodigoRapido()));
+        itemToAdd.setDescripcionProducto(itemToBeAdded.getNombreProducto());
+        itemToAdd.setPrecio(itemToBeAdded.getValor().doubleValue());
+        itemToAdd.setCantidad(Integer.parseInt(quantityEditText.getText().toString()));
+        orderItems.add(itemToAdd);
+        //orderItemAdapter.update(orderItems);
+        orderItemAdapter.notifyDataSetChanged();
     }
 
     private void checkItemAvailability() {

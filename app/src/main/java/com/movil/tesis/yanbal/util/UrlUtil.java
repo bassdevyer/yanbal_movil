@@ -80,6 +80,13 @@ public class UrlUtil {
                 builder.appendEncodedPath(properties.getClientsListEndpoint());
                 break;
             }
+            case ORDER_REGISTER: {
+                builder.scheme(properties.getScheme());
+                builder.encodedAuthority(authority);
+                builder.appendEncodedPath(properties.getServiceName());
+                builder.appendEncodedPath(properties.getRegisterOrderEndpoint());
+                break;
+            }
             default: {
                 throw new IllegalArgumentException();
             }

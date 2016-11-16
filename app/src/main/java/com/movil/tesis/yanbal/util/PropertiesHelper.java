@@ -33,6 +33,7 @@ public class PropertiesHelper {
     private String productCheckEndpoint;
     private String codeQueryParameter;
     private String clientsListEndpoint;
+    private String registerOrderEndpoint;
 
 
     private PropertiesHelper(Context context) {
@@ -66,6 +67,7 @@ public class PropertiesHelper {
             productCheckEndpoint = properties.getProperty("product_check_endpoint");
             codeQueryParameter = properties.getProperty("code_query_parameter");
             clientsListEndpoint = properties.getProperty("clients_list_endpoint");
+            registerClientEndpoint = properties.getProperty("register_order_endpoint");
             Log.i(TAG, "initPropertiesFile: Properties file successfully loaded");
         } catch (IOException | NumberFormatException ex) {
             Log.e(TAG, "Error cargando archivo de configuración", ex);
@@ -114,5 +116,9 @@ public class PropertiesHelper {
 
     public String getClientsListEndpoint() {
         return clientsListEndpoint;
+    }
+
+    public String getRegisterOrderEndpoint() {
+        return registerOrderEndpoint;
     }
 }

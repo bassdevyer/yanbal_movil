@@ -100,7 +100,8 @@ public class WelcomeActivity extends AppCompatActivity {
                     loggedConsultant = new Gson().fromJson(response.toString(), Consultora.class);
                     SharedPreferences.Editor sharedPreferences = getSharedPreferences(Constants.PREFERENCES_FILE_NAME, Context.MODE_PRIVATE).edit();
                     sharedPreferences.putBoolean(Constants.IS_LOGGED, true);
-                    sharedPreferences.commit();
+                    sharedPreferences.putString(Constants.CONSULTANT_ID, loggedConsultant.getIdentificacionConsultora());
+                    sharedPreferences.apply();
                     showWelcomeMessage();
                 }
             }

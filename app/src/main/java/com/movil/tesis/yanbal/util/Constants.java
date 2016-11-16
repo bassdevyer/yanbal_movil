@@ -9,4 +9,5 @@ public interface Constants {
     String PREFERENCES_FILE_NAME = "yanbal";
 
     String IS_LOGGED = "is_logged";
+    String CONSULTANT_ID = "consultant_id";
 }
