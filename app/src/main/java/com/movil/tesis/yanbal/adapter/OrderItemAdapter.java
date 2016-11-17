@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.movil.tesis.yanbal.OrderFragment;
 import com.movil.tesis.yanbal.R;
 import com.movil.tesis.yanbal.model.PedidosDetalle;
 
@@ -20,6 +21,7 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
 
     private List<PedidosDetalle> orderItems;
     private DecimalFormat df = new DecimalFormat("#.00");
+    private OrderFragment.OnItemClickListener listener;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView code, unitPrice, description, quantity, total;
@@ -34,16 +36,20 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
         }
     }
 
-    public OrderItemAdapter(List<PedidosDetalle> orderItems) {
+    public OrderItemAdapter(List<PedidosDetalle> orderItems, OrderFragment.OnItemClickListener onItemClickListener) {
         this.orderItems = orderItems;
+        this.listener = onItemClickListener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.order_item_row, parent, false);
-
-        return new ViewHolder(itemView);
+        itemView.setOnClickListener(listener);
+        itemView.setOnLongClickListener(listener);
+        ViewHolder viewHolder = new ViewHolder(itemView);
+        itemView.setTag(viewHolder);
+        return viewHolder;
     }
 
     @Override
@@ -61,9 +67,4 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
         return orderItems.size();
     }
 
-    public void update(List<PedidosDetalle> data) {
-        orderItems.clear();
-        orderItems.addAll(data);
-        notifyDataSetChanged();
-    }
 }

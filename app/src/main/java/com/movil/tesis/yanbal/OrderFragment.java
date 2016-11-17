@@ -3,6 +3,7 @@ package com.movil.tesis.yanbal;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -62,6 +64,8 @@ public class OrderFragment extends Fragment {
     private List<PedidosDetalle> orderItems;
     private PedidosCabecera orderHeader;
     private OrderItemAdapter orderItemAdapter;
+    private PedidosDetalle itemToUpdate;
+    private PedidosDetalle itemToDelete;
 
     private final SimpleDateFormat dt = new SimpleDateFormat("yyyy-mm-dd", Locale.getDefault());
 
@@ -77,7 +81,7 @@ public class OrderFragment extends Fragment {
         consultantIdentification = Preferences.getInstance(getActivity()).readStringPreference(Constants.CONSULTANT_ID, null);
         orderItems = new ArrayList<>();
         orderHeader = new PedidosCabecera();
-        orderItemAdapter = new OrderItemAdapter(orderItems);
+        orderItemAdapter = new OrderItemAdapter(orderItems, new OnItemClickListener());
     }
 
     @Override
@@ -115,6 +119,46 @@ public class OrderFragment extends Fragment {
             orderItemsRecyclerView.setAdapter(orderItemAdapter);
         }
 
+    }
+
+    public class OnItemClickListener implements AdapterView.OnClickListener, AdapterView.OnLongClickListener {
+        @Override
+        public void onClick(View view) {
+            updateFields();
+        }
+
+        @Override
+        public boolean onLongClick(final View view) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage("¿Está seguro que desea eliminar el elemento?");
+            builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    OrderItemAdapter.ViewHolder viewHolder = (OrderItemAdapter.ViewHolder) view.getTag();
+                    itemToDelete = findItemInList(Integer.parseInt(viewHolder.code.getText().toString()));
+                    if (itemToDelete != null) {
+                        orderItems.remove(itemToDelete);
+                        orderItemAdapter.notifyDataSetChanged();
+                        Toast.makeText(getActivity(), "Item eliminado", Toast.LENGTH_SHORT).show();
+                        clearFields();
+                        codeEditText.requestFocus();
+                    }
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            builder.create().show();
+            return true;
+        }
+
+    }
+
+    private void updateFields() {
+        Toast.makeText(getActivity(), "TODO update fields", Toast.LENGTH_SHORT).show();
     }
 
     private void registerOrder() {
@@ -198,11 +242,48 @@ public class OrderFragment extends Fragment {
         itemToAdd.setDescripcionProducto(itemToBeAdded.getNombreProducto());
         itemToAdd.setPrecio(itemToBeAdded.getValor().doubleValue());
         itemToAdd.setCantidad(Integer.parseInt(quantityEditText.getText().toString()));
-        orderItems.add(itemToAdd);
-        orderItemAdapter.notifyDataSetChanged();
-        Toast.makeText(getActivity(), R.string.item_added, Toast.LENGTH_SHORT).show();
-        clearFields();
-        codeEditText.requestFocus();
+        itemToUpdate = findItemInList(itemToBeAdded.getCodigoRapido());
+        if (itemToUpdate != null) {
+            showUpdateAlert();
+        } else {
+            orderItems.add(itemToAdd);
+            orderItemAdapter.notifyDataSetChanged();
+            Toast.makeText(getActivity(), R.string.item_added, Toast.LENGTH_SHORT).show();
+            clearFields();
+            codeEditText.requestFocus();
+        }
+    }
+
+
+    private void showUpdateAlert() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage("El item que desea agregar ya se encuentra en la lista ¿Desea actualizar la cantidad?");
+        builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                itemToUpdate.setCantidad(Integer.parseInt(quantityEditText.getText().toString()));
+                orderItemAdapter.notifyDataSetChanged();
+                Toast.makeText(getActivity(), "Item actualizado", Toast.LENGTH_SHORT).show();
+                clearFields();
+                codeEditText.requestFocus();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        builder.create().show();
+    }
+
+    private PedidosDetalle findItemInList(Integer code) {
+        for (PedidosDetalle item : orderItems) {
+            if (item.getNombreProducto().equals(String.valueOf(code))) {
+                return item;
+            }
+        }
+        return null;
     }
 
     private void clearFields() {
