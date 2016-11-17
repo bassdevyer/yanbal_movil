@@ -47,6 +47,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import static com.movil.tesis.yanbal.R.id.recyclerView;
 
@@ -60,10 +61,9 @@ public class OrderFragment extends Fragment {
     private String consultantIdentification;
     private List<PedidosDetalle> orderItems;
     private PedidosCabecera orderHeader;
-    private RecyclerView orderItemsRecyclerView;
     private OrderItemAdapter orderItemAdapter;
 
-    SimpleDateFormat dt = new SimpleDateFormat("yyyy-mm-dd");
+    private final SimpleDateFormat dt = new SimpleDateFormat("yyyy-mm-dd", Locale.getDefault());
 
     private static final String TAG = "OrderFragment";
 
@@ -107,7 +107,7 @@ public class OrderFragment extends Fragment {
                 }
             });
         }
-        orderItemsRecyclerView = (RecyclerView) rootView.findViewById(recyclerView);
+        RecyclerView orderItemsRecyclerView = (RecyclerView) rootView.findViewById(recyclerView);
         if (orderItemsRecyclerView != null) {
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
             orderItemsRecyclerView.setLayoutManager(mLayoutManager);
@@ -126,7 +126,7 @@ public class OrderFragment extends Fragment {
             public void onResponse(JSONObject response) {
                 progressDialog.dismiss();
                 Log.d(TAG, "onResponse: " + response.toString());
-                PedidosCabecera createdOrder = new Gson().fromJson(response.toString(), PedidosCabecera.class);
+                //PedidosCabecera createdOrder = new Gson().fromJson(response.toString(), PedidosCabecera.class);
                 Toast.makeText(getActivity(), "Registro exitoso", Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
@@ -199,13 +199,20 @@ public class OrderFragment extends Fragment {
         itemToAdd.setPrecio(itemToBeAdded.getValor().doubleValue());
         itemToAdd.setCantidad(Integer.parseInt(quantityEditText.getText().toString()));
         orderItems.add(itemToAdd);
-        //orderItemAdapter.update(orderItems);
         orderItemAdapter.notifyDataSetChanged();
+        Toast.makeText(getActivity(), R.string.item_added, Toast.LENGTH_SHORT).show();
+        clearFields();
+        codeEditText.requestFocus();
+    }
+
+    private void clearFields() {
+        codeEditText.getText().clear();
+        quantityEditText.getText().clear();
     }
 
     private void checkItemAvailability() {
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Verificando disponibilidad");
+        progressDialog.setMessage(getString(R.string.checking_availability));
         final String code = codeEditText.getText().toString();
         String url = UrlUtil.getInstance(getActivity()).getUrl(RequestType.PRODUCT_EXISTENCE_CHECK, null, null, code);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, new Response.Listener<JSONObject>() {
@@ -214,7 +221,6 @@ public class OrderFragment extends Fragment {
                 progressDialog.dismiss();
                 if (response != null) {
                     itemToBeAdded = new Gson().fromJson(response.toString(), ProductosYanbal.class);
-                    //Toast.makeText(getActivity(), itemToBeAdded.toString(), Toast.LENGTH_SHORT).show();
                     addItem();
                 }
             }

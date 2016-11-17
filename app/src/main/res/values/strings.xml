@@ -23,4 +23,6 @@
     <string name="order_register">Registro pedido</string>
     <string name="client">Cliente</string>
     <string name="add">Agregar</string>
+    <string name="checking_availability">Verificando disponibilidad</string>
+    <string name="item_added">Item agregado satisfactoriamente</string>
 </resources>
