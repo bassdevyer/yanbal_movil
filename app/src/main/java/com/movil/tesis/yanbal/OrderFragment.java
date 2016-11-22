@@ -107,7 +107,7 @@ public class OrderFragment extends Fragment {
             registerOrderButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    registerOrder();
+                    validateAndSubmit();
                 }
             });
         }
@@ -119,6 +119,33 @@ public class OrderFragment extends Fragment {
             orderItemsRecyclerView.setAdapter(orderItemAdapter);
         }
 
+    }
+
+    private void validateAndSubmit() {
+        boolean error = false;
+        String alertText = "";
+        if (clientsSpinner.getSelectedItem() == null) {
+            error = true;
+            alertText += getString(R.string.select_client);
+            alertText += "\n";
+        }
+        if (orderItems.isEmpty()) {
+            error = true;
+            alertText += getString(R.string.add_item);
+        }
+        if (error) {
+            AlertDialog.Builder errorDialog = new AlertDialog.Builder(getActivity());
+            errorDialog.setMessage(alertText);
+            errorDialog.setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            errorDialog.create().show();
+        } else {
+            registerOrder();
+        }
     }
 
     public class OnItemClickListener implements AdapterView.OnClickListener, AdapterView.OnLongClickListener {
