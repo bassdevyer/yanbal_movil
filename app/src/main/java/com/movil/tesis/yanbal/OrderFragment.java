@@ -318,7 +318,7 @@ public class OrderFragment extends Fragment {
                 }
                 if (error instanceof ParseError) {
                     AlertDialog incorrectCredentialsAlertDialog = new AlertDialog.Builder(getActivity()).create();
-                    incorrectCredentialsAlertDialog.setMessage("No se encontró el prododucto con el código " + codeEditText.getText());
+                    incorrectCredentialsAlertDialog.setMessage(getString(R.string.product_not_found, codeEditText.getText()));
                     incorrectCredentialsAlertDialog.show();
                 } else {
                     AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();

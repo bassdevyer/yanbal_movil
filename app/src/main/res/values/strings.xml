@@ -25,4 +25,5 @@
     <string name="add">Agregar</string>
     <string name="checking_availability">Verificando disponibilidad</string>
     <string name="item_added">Item agregado satisfactoriamente</string>
+    <string name="product_not_found">Producto con el código %1s no encontrado o no disponible</string>
 </resources>
