@@ -67,7 +67,7 @@ public class OrderFragment extends Fragment {
     private PedidosDetalle itemToUpdate;
     private PedidosDetalle itemToDelete;
 
-    private final SimpleDateFormat dt = new SimpleDateFormat("yyyy-mm-dd", Locale.getDefault());
+    private final SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
     private static final String TAG = "OrderFragment";
 
