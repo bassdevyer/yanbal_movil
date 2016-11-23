@@ -6,6 +6,11 @@
     android:orientation="vertical"
     tools:context="com.movil.tesis.yanbal.ConsolidatedFragment">
 
+    <ImageView
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:src="@mipmap/icon" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -17,10 +22,11 @@
             android:text="Campaña: " />
 
         <Spinner
+            android:id="@+id/campaignSpinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:entries="@array/campaigns"/>
+            android:entries="@array/campaigns" />
     </LinearLayout>
 
     <LinearLayout
@@ -34,21 +40,64 @@
             android:text="Semana: " />
 
         <Spinner
+            android:id="@+id/weekSpinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:entries="@array/weeks"/>
+            android:entries="@array/weeks" />
     </LinearLayout>
 
     <Button
+        android:id="@+id/submitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Consultar" />
+        android:text="Ver" />
 
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="*">
+
+        <TableRow>
+
+            <TextView
+                style="@style/cellHeader"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="COD PRO" />
+
+            <TextView
+                style="@style/cellHeader"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="PU" />
+
+            <TextView
+                style="@style/cellHeader"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Desc" />
+
+            <TextView
+                style="@style/cellHeader"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Cantidad" />
+
+            <TextView
+                style="@style/cellHeader"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Total" />
+        </TableRow>
+    </TableLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/consolidatedOrdersRecyclerView"
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical" />
 
 </LinearLayout>

@@ -25,8 +25,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 import com.movil.tesis.yanbal.model.Cliente;
-import com.movil.tesis.yanbal.util.Constants;
-import com.movil.tesis.yanbal.util.Preferences;
 import com.movil.tesis.yanbal.util.RequestType;
 import com.movil.tesis.yanbal.util.UrlUtil;
 
@@ -59,15 +57,12 @@ public class ClientRegisterFragment extends Fragment {
 
     private ImageButton locationImageButton;
 
-    private String consultantIdentification;
-
     public ClientRegisterFragment() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        consultantIdentification = Preferences.getInstance(getActivity()).readStringPreference(Constants.CONSULTANT_ID, null);
     }
 
     @Override
@@ -204,7 +199,7 @@ public class ClientRegisterFragment extends Fragment {
                 outcome.setFechaNacimientoCliente(clientBirthDateTextView.getText().toString());
                 outcome.setLatitudCliente(BigDecimal.valueOf(Double.parseDouble(clientLocationLatitudeTextView.getText().toString())));
                 outcome.setLongitudCliente(BigDecimal.valueOf(Double.parseDouble(getClientLocationLongitudeTextView.getText().toString())));
-                outcome.setCodConsultora(consultantIdentification);
+                outcome.setCodConsultora(((MainActivity) getActivity()).getConsultantIdentification());
                 return new Gson().toJson(outcome).getBytes();
             }
 

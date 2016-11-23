@@ -14,6 +14,9 @@ import android.support.v7.widget.Toolbar;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
+import com.movil.tesis.yanbal.util.Constants;
+import com.movil.tesis.yanbal.util.Preferences;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private String consultantIdentification;
 
     public static final int MAP_LOCATION_REQ_CODE = 1;
 
@@ -34,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
+        consultantIdentification = Preferences.getInstance(this).readStringPreference(Constants.CONSULTANT_ID, null);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -105,5 +111,9 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
     public ViewPager getViewPager() {
         return viewPager;
+    }
+
+    public String getConsultantIdentification() {
+        return consultantIdentification;
     }
 }

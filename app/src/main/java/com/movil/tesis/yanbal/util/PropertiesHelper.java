@@ -35,6 +35,9 @@ public class PropertiesHelper {
     private String clientsListEndpoint;
     private String registerOrderEndpoint;
     private String consultantIdQueryParameter;
+    private String consolidatedEndpoint;
+    private String campaignQueryParameter;
+    private String weekQueryParameter;
 
 
     private PropertiesHelper(Context context) {
@@ -70,6 +73,9 @@ public class PropertiesHelper {
             clientsListEndpoint = properties.getProperty("clients_list_endpoint");
             registerOrderEndpoint = properties.getProperty("register_order_endpoint");
             consultantIdQueryParameter = properties.getProperty("consultant_id_query_parameter");
+            consolidatedEndpoint = properties.getProperty("consolidated_endpoint");
+            campaignQueryParameter = properties.getProperty("campaing_parameter");
+            weekQueryParameter = properties.getProperty("week_parameter");
             Log.i(TAG, "initPropertiesFile: Properties file successfully loaded");
         } catch (IOException | NumberFormatException ex) {
             Log.e(TAG, "Error cargando archivo de configuración", ex);
@@ -126,5 +132,17 @@ public class PropertiesHelper {
 
     public String getConsultantIdQueryParameter() {
         return consultantIdQueryParameter;
+    }
+
+    public String getConsolidatedEndpoint() {
+        return consolidatedEndpoint;
+    }
+
+    public String getCampaignQueryParameter() {
+        return campaignQueryParameter;
+    }
+
+    public String getWeekQueryParameter() {
+        return weekQueryParameter;
     }
 }

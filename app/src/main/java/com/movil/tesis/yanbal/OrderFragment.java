@@ -36,8 +36,6 @@ import com.movil.tesis.yanbal.model.Consultora;
 import com.movil.tesis.yanbal.model.PedidosCabecera;
 import com.movil.tesis.yanbal.model.PedidosDetalle;
 import com.movil.tesis.yanbal.model.ProductosYanbal;
-import com.movil.tesis.yanbal.util.Constants;
-import com.movil.tesis.yanbal.util.Preferences;
 import com.movil.tesis.yanbal.util.RequestType;
 import com.movil.tesis.yanbal.util.UrlUtil;
 
@@ -60,7 +58,6 @@ public class OrderFragment extends Fragment {
     private EditText quantityEditText;
     private Button addItemButton;
     private ProductosYanbal itemToBeAdded;
-    private String consultantIdentification;
     private List<PedidosDetalle> orderItems;
     private PedidosCabecera orderHeader;
     private OrderItemAdapter orderItemAdapter;
@@ -78,7 +75,6 @@ public class OrderFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        consultantIdentification = Preferences.getInstance(getActivity()).readStringPreference(Constants.CONSULTANT_ID, null);
         orderItems = new ArrayList<>();
         orderHeader = new PedidosCabecera();
         orderItemAdapter = new OrderItemAdapter(orderItems, new OnItemClickListener());
@@ -221,7 +217,7 @@ public class OrderFragment extends Fragment {
             public byte[] getBody() {
                 Cliente client = (Cliente) clientsSpinner.getSelectedItem();
                 Consultora consultant = new Consultora();
-                consultant.setIdentificacionConsultora(consultantIdentification);
+                consultant.setIdentificacionConsultora(((MainActivity)getActivity()).getConsultantIdentification());
                 orderHeader = new PedidosCabecera();
                 orderHeader.setCliente(client);
                 orderHeader.setConsultora(consultant);
@@ -361,7 +357,7 @@ public class OrderFragment extends Fragment {
     private void initClientsSpinner() {
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Inicializando");
-        String url = UrlUtil.getInstance(getActivity()).getUrl(RequestType.CLIENTS_LIST, null, null, null, consultantIdentification);
+        String url = UrlUtil.getInstance(getActivity()).getUrl(RequestType.CLIENTS_LIST, null, null, null, ((MainActivity)getActivity()).getConsultantIdentification());
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
