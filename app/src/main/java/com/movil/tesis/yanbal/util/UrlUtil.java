@@ -29,11 +29,11 @@ public class UrlUtil {
         return instance;
     }
 
-    public String getProductCheckUrl(String code) {
-        return getUrl(RequestType.PRODUCT_EXISTENCE_CHECK, null, null, code);
+    public String getUrl(RequestType requestType, String username, String password, String code) {
+        return getUrl(requestType, username, password, code, null);
     }
 
-    public String getUrl(RequestType requestType, String username, String password, String code) throws IllegalArgumentException {
+    public String getUrl(RequestType requestType, String username, String password, String code, String consultantId) throws IllegalArgumentException {
         Uri.Builder builder = new Uri.Builder();
         PropertiesHelper properties = PropertiesHelper.getInstance(context);
 
@@ -78,6 +78,7 @@ public class UrlUtil {
                 builder.encodedAuthority(authority);
                 builder.appendEncodedPath(properties.getServiceName());
                 builder.appendEncodedPath(properties.getClientsListEndpoint());
+                builder.appendQueryParameter(properties.getConsultantIdQueryParameter(), consultantId);
                 break;
             }
             case ORDER_REGISTER: {

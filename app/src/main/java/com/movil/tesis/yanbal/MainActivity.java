@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new OrderFragment(), "Pedidos");
         adapter.addFragment(new ClientRegisterFragment(), "Registro de Clientes");
-        //adapter.addFragment(new ConsolidatedFragment(), "Consolidado");
+        adapter.addFragment(new ConsolidatedFragment(), "Consolidado");
         viewPager.setAdapter(adapter);
     }
 

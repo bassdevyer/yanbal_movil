@@ -20,6 +20,7 @@ public class Cliente {
     private String generoCliente;
     private BigDecimal latitudCliente;
     private BigDecimal longitudCliente;
+    private String codConsultora;
 
     public String getIdentificacionCliente() {
         return identificacionCliente;
@@ -109,6 +110,14 @@ public class Cliente {
         this.longitudCliente = longitudCliente;
     }
 
+    public String getCodConsultora() {
+        return codConsultora;
+    }
+
+    public void setCodConsultora(String codConsultora) {
+        this.codConsultora = codConsultora;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -138,6 +147,8 @@ public class Cliente {
             return false;
         if (longitudCliente != null ? !longitudCliente.equals(cliente.longitudCliente) : cliente.longitudCliente != null)
             return false;
+        if (codConsultora != null ? !codConsultora.equals(cliente.codConsultora) : cliente.codConsultora != null)
+            return false;
 
         return true;
     }
@@ -155,6 +166,7 @@ public class Cliente {
         result = 31 * result + (generoCliente != null ? generoCliente.hashCode() : 0);
         result = 31 * result + (latitudCliente != null ? latitudCliente.hashCode() : 0);
         result = 31 * result + (longitudCliente != null ? longitudCliente.hashCode() : 0);
+        result = 31 * result + (codConsultora != null ? codConsultora.hashCode() : 0);
         return result;
     }
 
