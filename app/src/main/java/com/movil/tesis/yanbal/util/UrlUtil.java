@@ -97,7 +97,9 @@ public class UrlUtil {
                 builder.scheme(properties.getScheme());
                 builder.encodedAuthority(authority);
                 builder.appendEncodedPath(properties.getServiceName());
-                builder.appendEncodedPath(properties.getRegisterOrderEndpoint());
+                builder.appendEncodedPath(properties.getConsolidatedEndpoint());
+                builder.appendQueryParameter(properties.getCampaignQueryParameter(), campaign);
+                builder.appendQueryParameter(properties.getWeekQueryParameter(), week);
                 break;
             }
             default: {

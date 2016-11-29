@@ -11,6 +11,8 @@ public class PedidosCabecera {
     private Consultora consultora;
     private Cliente cliente;
     private Collection<PedidosDetalle> pedidosDetalles;
+    private String campana;
+    private String semana;
 
     public int getCodigoPedidoCabecera() {
         return codigoPedidoCabecera;
@@ -71,5 +73,21 @@ public class PedidosCabecera {
 
     public void setPedidosDetalles(Collection<PedidosDetalle> pedidosDetalles) {
         this.pedidosDetalles = pedidosDetalles;
+    }
+
+    public String getCampana() {
+        return campana;
+    }
+
+    public void setCampana(String campana) {
+        this.campana = campana;
+    }
+
+    public String getSemana() {
+        return semana;
+    }
+
+    public void setSemana(String semana) {
+        this.semana = semana;
     }
 }

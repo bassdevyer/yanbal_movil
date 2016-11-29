@@ -69,6 +69,19 @@ public class ConsolidatedFragment extends Fragment {
 
     private void inflateViews(View rootView) {
         campaignSpinner = (Spinner) rootView.findViewById(R.id.campaignSpinner);
+        /*if (campaignSpinner != null) {
+            campaignSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    populateWeeksSpinner(((TextView) view).getText().toString());
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+        }*/
         weekSpinner = (Spinner) rootView.findViewById(R.id.weekSpinner);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         if (recyclerView != null) {
@@ -85,6 +98,16 @@ public class ConsolidatedFragment extends Fragment {
             }
         });
     }
+
+    /*private void populateWeeksSpinner(String monthNumber) {
+        ArrayList<String> weeksSpinnerItems = new ArrayList<>();
+        int maxWeeks = getMaxWeeksForMonth(Integer.parseInt(monthNumber));
+        for (int index = 1; index <= maxWeeks; index++) {
+            weeksSpinnerItems.add(String.valueOf(index));
+        }
+        weekSpinner.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, weeksSpinnerItems));
+
+    }*/
 
     private void retrieveOrderDetails() {
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
@@ -130,5 +153,16 @@ public class ConsolidatedFragment extends Fragment {
         orderItems.addAll(details);
         orderItemAdapter.notifyDataSetChanged();
     }
+
+    /*private int getMaxWeeksForMonth(int monthNumber) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.MONTH, monthNumber);
+        cal.set(Calendar.DAY_OF_MONTH, 1);
+        int start = cal.get(Calendar.WEEK_OF_YEAR);
+        cal.set(Calendar.MONTH, monthNumber);
+        cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+        int end = cal.get(Calendar.WEEK_OF_YEAR);
+        return end - start + 1;
+    }*/
 
 }

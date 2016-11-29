@@ -45,7 +45,7 @@ import org.json.JSONObject;
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -193,8 +193,9 @@ public class OrderFragment extends Fragment {
             public void onResponse(JSONObject response) {
                 progressDialog.dismiss();
                 Log.d(TAG, "onResponse: " + response.toString());
-                //PedidosCabecera createdOrder = new Gson().fromJson(response.toString(), PedidosCabecera.class);
                 Toast.makeText(getActivity(), "Registro exitoso", Toast.LENGTH_SHORT).show();
+                getActivity().finish();
+                getActivity().startActivity(getActivity().getIntent());
             }
         }, new Response.ErrorListener() {
             @Override
@@ -217,11 +218,20 @@ public class OrderFragment extends Fragment {
             public byte[] getBody() {
                 Cliente client = (Cliente) clientsSpinner.getSelectedItem();
                 Consultora consultant = new Consultora();
-                consultant.setIdentificacionConsultora(((MainActivity)getActivity()).getConsultantIdentification());
+                consultant.setIdentificacionConsultora(((MainActivity) getActivity()).getConsultantIdentification());
                 orderHeader = new PedidosCabecera();
                 orderHeader.setCliente(client);
                 orderHeader.setConsultora(consultant);
-                orderHeader.setFechaCompra(dt.format(new Date()));
+                Calendar calendar = Calendar.getInstance();
+                orderHeader.setFechaCompra(dt.format(calendar.getTime()));
+                orderHeader.setCampana(String.valueOf(calendar.get(Calendar.MONTH) + 1));
+                int week;
+                if (calendar.get(Calendar.WEEK_OF_MONTH) == 5) {
+                    week = 4;
+                } else {
+                    week = calendar.get(Calendar.WEEK_OF_MONTH);
+                }
+                orderHeader.setSemana(String.valueOf(week));
                 orderHeader.setPedidosDetalles(orderItems);
                 Log.d(TAG, "getBody: " + new Gson().toJson(orderHeader));
                 return new Gson().toJson(orderHeader).getBytes();
@@ -265,6 +275,7 @@ public class OrderFragment extends Fragment {
         itemToAdd.setDescripcionProducto(itemToBeAdded.getNombreProducto());
         itemToAdd.setPrecio(itemToBeAdded.getValor().doubleValue());
         itemToAdd.setCantidad(Integer.parseInt(quantityEditText.getText().toString()));
+        itemToAdd.setEstado(String.valueOf(itemToBeAdded.getDisponible()));
         itemToUpdate = findItemInList(itemToBeAdded.getCodigoRapido());
         if (itemToUpdate != null) {
             showUpdateAlert();
@@ -357,7 +368,7 @@ public class OrderFragment extends Fragment {
     private void initClientsSpinner() {
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Inicializando");
-        String url = UrlUtil.getInstance(getActivity()).getUrl(RequestType.CLIENTS_LIST, null, null, null, ((MainActivity)getActivity()).getConsultantIdentification());
+        String url = UrlUtil.getInstance(getActivity()).getUrl(RequestType.CLIENTS_LIST, null, null, null, ((MainActivity) getActivity()).getConsultantIdentification());
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
