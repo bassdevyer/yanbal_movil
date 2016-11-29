@@ -50,4 +50,6 @@
         <item>3</item>
         <item>4</item>
     </string-array>
+
+    <string name="action_logout">Cerrar sesión</string>
 </resources>
