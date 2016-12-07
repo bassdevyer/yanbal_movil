@@ -101,6 +101,7 @@ public class UrlUtil {
                 builder.appendEncodedPath(properties.getConsolidatedEndpoint());
                 builder.appendQueryParameter(properties.getCampaignQueryParameter(), campaign);
                 builder.appendQueryParameter(properties.getWeekQueryParameter(), week);
+                builder.appendQueryParameter(properties.getConsultantIdQueryParameter(), consultantId);
                 break;
             }
             default: {
