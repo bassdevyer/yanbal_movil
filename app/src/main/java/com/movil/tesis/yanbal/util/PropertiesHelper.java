@@ -38,6 +38,7 @@ public class PropertiesHelper {
     private String consolidatedEndpoint;
     private String campaignQueryParameter;
     private String weekQueryParameter;
+    private String securityCodeParameter;
 
 
     private PropertiesHelper(Context context) {
@@ -76,6 +77,7 @@ public class PropertiesHelper {
             consolidatedEndpoint = properties.getProperty("consolidated_endpoint");
             campaignQueryParameter = properties.getProperty("campaing_parameter");
             weekQueryParameter = properties.getProperty("week_parameter");
+            securityCodeParameter = properties.getProperty("security_code_parameter");
             Log.i(TAG, "initPropertiesFile: Properties file successfully loaded");
         } catch (IOException | NumberFormatException ex) {
             Log.e(TAG, "Error cargando archivo de configuración", ex);
@@ -144,5 +146,9 @@ public class PropertiesHelper {
 
     public String getWeekQueryParameter() {
         return weekQueryParameter;
+    }
+
+    public String getSecurityCodeParameter() {
+        return securityCodeParameter;
     }
 }

@@ -40,6 +40,7 @@ public class RegisterConsultantActivity extends AppCompatActivity implements Dat
     private EditText consultantPhone;
     private EditText consultantMobile;
     private Spinner consultantGenreSpinner;
+    private EditText consultantSecurityCode;
 
     private TextView consultantBirthDateTextView;
 
@@ -64,6 +65,7 @@ public class RegisterConsultantActivity extends AppCompatActivity implements Dat
         consultantPhone = (EditText) findViewById(R.id.consultantPhone);
         consultantMobile = (EditText) findViewById(R.id.consultantMobile);
         consultantGenreSpinner = (Spinner) findViewById(R.id.consultantGenre);
+        consultantSecurityCode = (EditText) findViewById(R.id.consultantSecurityCode);
 
         Button registerButton = (Button) findViewById(R.id.registerButton);
 
@@ -125,6 +127,11 @@ public class RegisterConsultantActivity extends AppCompatActivity implements Dat
             consultantBirthDateTextView.setError("La fecha de nacimiento es obligatoria");
             outcome = false;
         }
+        if (TextUtils.isEmpty(consultantSecurityCode.getText())) {
+            consultantSecurityCode.setError("El campo código de registro es obligatorio");
+            outcome = false;
+        }
+
         if (TextUtils.isEmpty(consultantPasswordConfirmation.getText())) {
             consultantPasswordConfirmation.setError("Por favor confirme su contraseña");
             outcome = false;
@@ -140,8 +147,8 @@ public class RegisterConsultantActivity extends AppCompatActivity implements Dat
     private void submitRegister() {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Registrando");
-        //JsonObjectRequest(String url, JSONObject jsonRequest, Listener<JSONObject> listener, Response.ErrorListener errorListener)
-        String url = UrlUtil.getInstance(this).getUrl(RequestType.CONSULTANT_REGISTER, null, null, null);
+        // getUrl(RequestType requestType, String username, String password, String code, String consultantId, String campaign, String week, String securityCode)
+        String url = UrlUtil.getInstance(this).getUrl(RequestType.CONSULTANT_REGISTER, null, null, null, null, null, null, consultantSecurityCode.getText().toString());
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -161,7 +168,7 @@ public class RegisterConsultantActivity extends AppCompatActivity implements Dat
                     alertDialog.show();
                 } else {
                     AlertDialog alertDialog = new AlertDialog.Builder(RegisterConsultantActivity.this).create();
-                    alertDialog.setMessage("Error");
+                    alertDialog.setMessage("Error registrando la consultora. Verifique que la información y el código de seguridad sean los correctos.");
                     alertDialog.show();
                 }
             }

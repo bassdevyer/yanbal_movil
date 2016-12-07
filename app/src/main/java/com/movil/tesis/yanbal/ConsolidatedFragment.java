@@ -112,7 +112,7 @@ public class ConsolidatedFragment extends Fragment {
     private void retrieveOrderDetails() {
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Consultando...");
-        String url = UrlUtil.getInstance(getActivity()).getUrl(RequestType.CONSOLIDATED, null, null, null, ((MainActivity) getActivity()).getConsultantIdentification(), campaignSpinner.getSelectedItem().toString(), weekSpinner.getSelectedItem().toString());
+        String url = UrlUtil.getInstance(getActivity()).getUrl(RequestType.CONSOLIDATED, null, null, null, ((MainActivity) getActivity()).getConsultantIdentification(), campaignSpinner.getSelectedItem().toString(), weekSpinner.getSelectedItem().toString(), null);
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {

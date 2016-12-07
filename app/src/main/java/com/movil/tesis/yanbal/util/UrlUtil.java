@@ -34,11 +34,11 @@ public class UrlUtil {
     }
 
     public String getUrl(RequestType requestType, String username, String password, String code, String consultantId){
-        return getUrl(requestType, username, password, code, consultantId, null, null);
+        return getUrl(requestType, username, password, code, consultantId, null, null, null);
     }
 
 
-    public String getUrl(RequestType requestType, String username, String password, String code, String consultantId, String campaign, String week) throws IllegalArgumentException {
+    public String getUrl(RequestType requestType, String username, String password, String code, String consultantId, String campaign, String week, String securityCode) throws IllegalArgumentException {
         Uri.Builder builder = new Uri.Builder();
         PropertiesHelper properties = PropertiesHelper.getInstance(context);
 
@@ -61,6 +61,7 @@ public class UrlUtil {
                 builder.encodedAuthority(authority);
                 builder.appendEncodedPath(properties.getServiceName());
                 builder.appendEncodedPath(properties.getRegisterConsultantEndpoint());
+                builder.appendQueryParameter(properties.getSecurityCodeParameter(), securityCode);
                 break;
             }
             case CLIENT_REGISTER: {

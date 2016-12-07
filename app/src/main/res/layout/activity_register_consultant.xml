@@ -135,6 +135,14 @@
             android:hint="Confirmar Contraseña"
             android:inputType="textPassword" />
 
+        <EditText
+            android:id="@+id/consultantSecurityCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Código de registro"
+            android:inputType="number"
+            android:maxLength="3" />
+
         <Button
             android:id="@+id/registerButton"
             android:layout_width="match_parent"
