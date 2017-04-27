@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "954080960486",
+    "firebase_url": "https://yanbal-tesis.firebaseio.com",
+    "project_id": "yanbal-tesis",
+    "storage_bucket": "yanbal-tesis.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:954080960486:android:9ee1bd601db369ee",
+        "android_client_info": {
+          "package_name": "com.movil.tesis.yanbal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "954080960486-kn9705r00oadqgi5583o2d5j9md1tlin.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCvGYQtW53X8bKTvBhEG-HPFwFlhsVyks"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
