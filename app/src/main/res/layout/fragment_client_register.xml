@@ -74,7 +74,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Identificación"
-                android:inputType="number" />
+                android:inputType="number"
+                android:maxLength="13" />
 
             <EditText
                 android:id="@+id/clientEmail"
@@ -88,14 +89,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Teléfono"
-                android:inputType="number" />
+                android:inputType="number"
+                android:maxLength="10" />
 
             <EditText
                 android:id="@+id/clientMobile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Celular"
-                android:inputType="number" />
+                android:inputType="number"
+                android:maxLength="10" />
 
             <LinearLayout
                 android:layout_width="match_parent"
