@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         TextView clientBirthDateTextView = (TextView) findViewById(R.id.clientBirthDateTextView);
-        clientBirthDateTextView.setText(year + "/" + month + "/" + dayOfMonth);
+        clientBirthDateTextView.setText(year + "/" + (month + 1)  + "/" + dayOfMonth);
     }
 
     public ViewPager getViewPager() {

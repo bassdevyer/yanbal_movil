@@ -201,6 +201,6 @@ public class RegisterConsultantActivity extends AppCompatActivity implements Dat
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        consultantBirthDateTextView.setText(year + "/" + month + "/" + dayOfMonth);
+        consultantBirthDateTextView.setText(year + "/" + (month + 1) + "/" + dayOfMonth);
     }
 }
