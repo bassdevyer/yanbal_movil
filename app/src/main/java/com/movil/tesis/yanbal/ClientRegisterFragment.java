@@ -27,6 +27,7 @@ import com.google.gson.Gson;
 import com.movil.tesis.yanbal.model.Cliente;
 import com.movil.tesis.yanbal.util.RequestType;
 import com.movil.tesis.yanbal.util.UrlUtil;
+import com.movil.tesis.yanbal.util.Util;
 
 import org.json.JSONObject;
 
@@ -125,6 +126,10 @@ public class ClientRegisterFragment extends Fragment {
             clientIdentificationEditText.setError("El campo identificación es obligatorio");
             outcome = false;
         }
+        if (!Util.isDNIValid(clientIdentificationEditText.getText().toString())) {
+            clientIdentificationEditText.setError("La cédula ingresada no es válida");
+            outcome = false;
+        }
         if (TextUtils.isEmpty(clientNameEditText.getText())) {
             clientNameEditText.setError("El campo nombre es obligatorio");
             outcome = false;
@@ -135,6 +140,10 @@ public class ClientRegisterFragment extends Fragment {
         }
         if (TextUtils.isEmpty(clientEmailEditText.getText())) {
             clientEmailEditText.setError("El campo email es obligatorio");
+            outcome = false;
+        }
+        if (!Util.isValidEmail(clientEmailEditText.getText().toString())) {
+            clientEmailEditText.setError("El mail ingresado no es válido");
             outcome = false;
         }
         if (TextUtils.isEmpty(clientPhoneEditText.getText())) {

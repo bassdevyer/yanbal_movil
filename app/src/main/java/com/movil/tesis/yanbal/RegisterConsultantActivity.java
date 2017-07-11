@@ -25,6 +25,7 @@ import com.google.gson.Gson;
 import com.movil.tesis.yanbal.model.Consultora;
 import com.movil.tesis.yanbal.util.RequestType;
 import com.movil.tesis.yanbal.util.UrlUtil;
+import com.movil.tesis.yanbal.util.Util;
 
 import org.json.JSONObject;
 
@@ -99,6 +100,10 @@ public class RegisterConsultantActivity extends AppCompatActivity implements Dat
             consultantIdentification.setError("El campo cédula es obligatorio");
             outcome = false;
         }
+        if (!Util.isDNIValid(consultantIdentification.getText().toString())) {
+            consultantIdentification.setError("La cédula ingresada no es válida");
+            outcome = false;
+        }
         if (TextUtils.isEmpty(consultantName.getText())) {
             consultantName.setError("El campo nombre es obligatorio");
             outcome = false;
@@ -109,6 +114,10 @@ public class RegisterConsultantActivity extends AppCompatActivity implements Dat
         }
         if (TextUtils.isEmpty(consultantEmail.getText())) {
             consultantEmail.setError("El campo email es obligatorio");
+            outcome = false;
+        }
+        if (!Util.isValidEmail(consultantEmail.getText().toString())) {
+            consultantEmail.setError("El mail ingresado no es válido");
             outcome = false;
         }
         if (TextUtils.isEmpty(consultantPassword.getText())) {
