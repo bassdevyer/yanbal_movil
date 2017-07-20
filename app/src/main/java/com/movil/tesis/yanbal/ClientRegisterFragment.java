@@ -173,7 +173,7 @@ public class ClientRegisterFragment extends Fragment {
             @Override
             public void onResponse(JSONObject response) {
                 progressDialog.dismiss();
-                Toast.makeText(getActivity(), "Registro exitoso", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Registro exitoso", Toast.LENGTH_LONG).show();
                 getActivity().finish();
                 getActivity().startActivity(getActivity().getIntent());
             }

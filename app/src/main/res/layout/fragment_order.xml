@@ -63,7 +63,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Cantidad"
                     android:inputType="number"
-                    android:maxLength="3" />
+                    android:maxLength="4" />
             </LinearLayout>
 
             <Button

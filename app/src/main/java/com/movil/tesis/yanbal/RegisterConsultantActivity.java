@@ -26,6 +26,7 @@ import com.movil.tesis.yanbal.model.Consultora;
 import com.movil.tesis.yanbal.util.RequestType;
 import com.movil.tesis.yanbal.util.UrlUtil;
 import com.movil.tesis.yanbal.util.Util;
+import com.android.volley.DefaultRetryPolicy;
 
 import org.json.JSONObject;
 
@@ -44,6 +45,8 @@ public class RegisterConsultantActivity extends AppCompatActivity implements Dat
     private EditText consultantSecurityCode;
 
     private TextView consultantBirthDateTextView;
+
+    //String consultantPass = consultantPassword.getText().toString();
 
     private static final String TAG = "RegisterConsultantActiv";
 
@@ -67,6 +70,7 @@ public class RegisterConsultantActivity extends AppCompatActivity implements Dat
         consultantMobile = (EditText) findViewById(R.id.consultantMobile);
         consultantGenreSpinner = (Spinner) findViewById(R.id.consultantGenre);
         consultantSecurityCode = (EditText) findViewById(R.id.consultantSecurityCode);
+        //consultantPass = (EditText) findViewById(R.id.consultantPassword);
 
         Button registerButton = (Button) findViewById(R.id.registerButton);
 
@@ -141,6 +145,20 @@ public class RegisterConsultantActivity extends AppCompatActivity implements Dat
             outcome = false;
         }
 
+        if (TextUtils.isEmpty(consultantPassword.getText()) || consultantPassword.getText().length() < 6) {
+            consultantPassword.setError("Contraseña debe tener mínimo 6 caracteres");
+            outcome = false;
+        }
+
+        /*if (consultantPass.isEmpty() || consultantPass.length() < 6){
+            consultantPassword.setError("Contraseña debe ser mayor a 6 caracteres");
+        }
+        else {
+            consultantPassword.setError(null);
+            //startActivity(new Intent(RegistrationActivity.this,MainActivity.class));
+        }*/
+
+
         if (TextUtils.isEmpty(consultantPasswordConfirmation.getText())) {
             consultantPasswordConfirmation.setError("Por favor confirme su contraseña");
             outcome = false;
@@ -155,6 +173,7 @@ public class RegisterConsultantActivity extends AppCompatActivity implements Dat
 
     private void submitRegister() {
         final ProgressDialog progressDialog = new ProgressDialog(this);
+        //String pass = consultantPassword.getText().toString();
         progressDialog.setMessage("Registrando");
         // getUrl(RequestType requestType, String username, String password, String code, String consultantId, String campaign, String week, String securityCode)
         String url = UrlUtil.getInstance(this).getUrl(RequestType.CONSULTANT_REGISTER, null, null, null, null, null, null, consultantSecurityCode.getText().toString());
@@ -163,7 +182,7 @@ public class RegisterConsultantActivity extends AppCompatActivity implements Dat
             public void onResponse(JSONObject response) {
                 progressDialog.dismiss();
                 Consultora createdConsultora = new Gson().fromJson(response.toString(), Consultora.class);
-                Toast.makeText(RegisterConsultantActivity.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterConsultantActivity.this, "Registro exitoso", Toast.LENGTH_LONG).show();
                 finish();
             }
         }, new Response.ErrorListener() {
@@ -204,6 +223,10 @@ public class RegisterConsultantActivity extends AppCompatActivity implements Dat
                 return "application/json";
             }
         };
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                60000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         progressDialog.show();
         AppSingleton.getInstance(this).addToRequestQueue(request, null);
     }

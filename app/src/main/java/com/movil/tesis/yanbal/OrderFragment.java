@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -162,7 +163,7 @@ public class OrderFragment extends Fragment {
                     if (itemToDelete != null) {
                         orderItems.remove(itemToDelete);
                         orderItemAdapter.notifyDataSetChanged();
-                        Toast.makeText(getActivity(), "Item eliminado", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Item eliminado", Toast.LENGTH_LONG).show();
                         clearFields();
                         codeEditText.requestFocus();
                     }
@@ -181,7 +182,7 @@ public class OrderFragment extends Fragment {
     }
 
     private void updateFields() {
-        Toast.makeText(getActivity(), "TODO update fields", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "TODO update fields", Toast.LENGTH_LONG).show();
     }
 
     private void registerOrder() {
@@ -193,7 +194,7 @@ public class OrderFragment extends Fragment {
             public void onResponse(JSONObject response) {
                 progressDialog.dismiss();
                 Log.d(TAG, "onResponse: " + response.toString());
-                Toast.makeText(getActivity(), "Registro exitoso", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Registro exitoso", Toast.LENGTH_LONG).show();
                 getActivity().finish();
                 getActivity().startActivity(getActivity().getIntent());
             }
@@ -242,6 +243,10 @@ public class OrderFragment extends Fragment {
                 return "application/json";
             }
         };
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                60000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         progressDialog.show();
         AppSingleton.getInstance(getActivity()).addToRequestQueue(request, null);
     }
@@ -270,6 +275,8 @@ public class OrderFragment extends Fragment {
     }
 
     private void addItem() {
+
+        //JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new Response.Listener<JSONObject>();
         PedidosDetalle itemToAdd = new PedidosDetalle();
         itemToAdd.setNombreProducto(String.valueOf(itemToBeAdded.getCodigoRapido()));
         itemToAdd.setDescripcionProducto(itemToBeAdded.getNombreProducto());
@@ -286,6 +293,13 @@ public class OrderFragment extends Fragment {
             clearFields();
             codeEditText.requestFocus();
         }
+        /*request.setRetryPolicy(new DefaultRetryPolicy(
+                60000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        progressDialog.show();
+        AppSingleton.getInstance(this).addToRequestQueue(request, null);*/
+
     }
 
 
@@ -297,7 +311,7 @@ public class OrderFragment extends Fragment {
             public void onClick(DialogInterface dialogInterface, int i) {
                 itemToUpdate.setCantidad(Integer.parseInt(quantityEditText.getText().toString()));
                 orderItemAdapter.notifyDataSetChanged();
-                Toast.makeText(getActivity(), "Item actualizado", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Item actualizado", Toast.LENGTH_LONG).show();
                 clearFields();
                 codeEditText.requestFocus();
             }
